@@ -1,0 +1,11 @@
+Gesture Controlled Vehicle/venv
+Vehicle-NodeMCU-Control/.gitignore
+Vehicle-NodeMCU-Control/.vscode/extensions.json
+Vehicle-NodeMCU-Control/include/README
+Vehicle-NodeMCU-Control/lib/README
+Vehicle-NodeMCU-Control/test/README
+Vehicle-NodeMCU-Control/.pio
+Vehicle-NodeMCU-Control/.vscode/.browse.c_cpp.db*
+Vehicle-NodeMCU-Control/.vscode/c_cpp_properties.json
+Vehicle-NodeMCU-Control/.vscode/launch.json
+Vehicle-NodeMCU-Control/.vscode/ipch
