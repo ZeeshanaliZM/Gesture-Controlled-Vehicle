@@ -25,7 +25,7 @@ void setupmDNS(){
 }
 
 void rootHandle(){
-    server.send(200,"text/plain","Connection with Vehicle Estasblished");
+    server.send(200,"text/plain","Connection with Vehicle Estasblished.\nGesture Controlled Vehcile online.");
 }
 
 void routeHandler(){
