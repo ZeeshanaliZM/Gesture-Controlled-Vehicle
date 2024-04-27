@@ -1,6 +1,7 @@
 #include "Header_definitions.h"
 
 void connecttoWifi(){
+    WiFi.mode(WIFI_STA);
     WiFi.begin(FPSTR(ssid),FPSTR(password));
     Serial.print(F("Connecting"));
     while (WiFi.status() != WL_CONNECTED)
