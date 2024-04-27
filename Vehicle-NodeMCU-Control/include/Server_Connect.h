@@ -2,13 +2,13 @@
 
 void connecttoWifi(){
     WiFi.begin(FPSTR(ssid),FPSTR(password));
-    Serial.print("Connecting");
+    Serial.print(F("Connecting"));
     while (WiFi.status() != WL_CONNECTED)
     {
         delay(500);
-        Serial.print(".");
+        Serial.print(F("."));
     }
     Serial.println();
-    Serial.print("Connected, IP address: ");
+    Serial.print(F("Connected, IP address: "));
     Serial.println(WiFi.localIP());
     }
