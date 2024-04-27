@@ -23,3 +23,11 @@ void setupmDNS(){
     server.begin();
     MDNS.addService("http", "tcp", 80);
 }
+
+void rootHandle(){
+    server.send(200,"Connection with Vehicle Estasblished");
+}
+
+void routeHandler(){
+    server.on("/",rootHandle);
+}
