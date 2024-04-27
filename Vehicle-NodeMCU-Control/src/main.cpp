@@ -2,7 +2,10 @@
 
 void setup(){
     Serial.begin(115200);
-    connecttoWifi(); 
+    connecttoWifi();
+    setupmDNS();
 }
 
-void loop(){}
+void loop(){
+    MDNS.update();
+}
