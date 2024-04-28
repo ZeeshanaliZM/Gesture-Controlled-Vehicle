@@ -1,11 +1,13 @@
 import cv2
 import numpy as np
 from requests import get, exceptions
+from mediapipe.python import solutions
 
 ESP8266_URL = "http://esp8266.local:80/"
 
 def main():
     camera = cv2.VideoCapture(0)
+    hands = Hands(model_complexity=0)
     while True:
         frame = cv2.flip(camera.read()[1],1)
         handDetection(frame)
