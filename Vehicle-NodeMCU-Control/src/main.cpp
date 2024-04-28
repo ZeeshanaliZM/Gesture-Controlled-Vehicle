@@ -3,11 +3,10 @@
 void setup(){
     Serial.begin(115200);
     connecttoWifi();
-    setupmDNS();
+    server.begin();
     URLHandler(); 
 }
 
 void loop(){
-    MDNS.update();
     server.handleClient();
 }
