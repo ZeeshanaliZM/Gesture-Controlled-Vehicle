@@ -32,6 +32,10 @@ def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
         if hand.classification[0].label == "Left":
             draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
+def getCoordinatesofPoints(hand_landmarks,start,stop,step):
+    return {"x": np.array([points.x for points in hand_landmarks[0].landmark[start:stop:step]]),
+            "y": np.array([points.y for points in hand_landmarks[0].landmark[start:stop:step]]) }
+
 
 def handDetection(frame,hands):
     frame_BGR = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
