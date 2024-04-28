@@ -4,7 +4,7 @@ from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks
 
-ESP8266_URL = "http://esp8266.local:80/"
+ESP8266_URL = "http://192.168.137.225:80/"
 
 def main():
     camera = cv2.VideoCapture(0)
