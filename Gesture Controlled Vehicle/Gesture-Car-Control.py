@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from requests import get, exceptions
-from mediapipe.python import solutions
+from mediapipe.python.solutions.hands import Hands
 
 ESP8266_URL = "http://esp8266.local:80/"
 
@@ -29,7 +29,6 @@ def connecttoVehicle():
 
 def handDetection(frame):
     frame_BGR = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
-    hands = solutions.hands.Hands()
     result = hands.process(frame_BGR)
     print(result)
     
