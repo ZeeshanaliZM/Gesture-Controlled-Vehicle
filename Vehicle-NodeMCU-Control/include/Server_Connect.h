@@ -28,6 +28,13 @@ void rootHandle(){
     server.send(200,"text/plain","Connection with Vehicle Estasblished.\nGesture Controlled Vehcile online.");
 }
 
+void forwardHandler(){
+    server.send(200,"text/plain","");
+    Serial.println("Move Forward");
+}
+
+
 void URLHandler(){
     server.on("/",rootHandle);
+    server.on("/moveForward",forwardHandler);
 }
