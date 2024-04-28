@@ -30,3 +30,20 @@ void configMotorPins(){
     setMotorPinDirection();
     initPins();
 }
+
+void setMotorSpeed_Direction(uint8_t pin,int motorSpeed_Direction){
+    analogWrite(pin,motorSpeed_Direction);
+}
+
+void moveForward(){
+    digitalWrite(DRIVER_IN4_BACK,HIGH);
+    digitalWrite(DRIVER_IN3_BACK,LOW);
+    setMotorSpeed_Direction(DRIVER_EN2_BACK_SPEED,255);
+}
+
+void moveBackward(){
+    digitalWrite(DRIVER_IN4_BACK,LOW);
+    digitalWrite(DRIVER_IN3_BACK,HIGH);
+    setMotorSpeed_Direction(DRIVER_EN2_BACK_SPEED,255);
+}
+

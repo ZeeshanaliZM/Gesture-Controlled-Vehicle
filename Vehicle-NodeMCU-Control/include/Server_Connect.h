@@ -1,4 +1,5 @@
 #include "Header_definitions.h"
+#include "Control_Car.h"
 
 void connecttoWifi(){
     WiFi.mode(WIFI_STA);
@@ -21,11 +22,13 @@ void rootHandle(){
 void forwardHandler(){
     server.send(200,"text/plain","");
     Serial.println("Move Forward");
+    moveForward();
 }
 
 void backwardHandler(){
     server.send(200,"text/plain","");
     Serial.println("Move Backward");
+    moveBackward();
 }
 
 void URLHandler(){
