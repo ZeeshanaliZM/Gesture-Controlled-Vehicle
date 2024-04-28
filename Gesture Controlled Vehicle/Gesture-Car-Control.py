@@ -9,10 +9,9 @@ ESP8266_URL = "http://esp8266.local:80/"
 def main():
     camera = cv2.VideoCapture(0)
     hands = Hands(model_complexity=1)
-    left_hand_landmark = None
     while camera.isOpened():
         frame = cv2.flip(camera.read()[1],1)
-        left_hand_landmark = handDetection(frame,hands)
+        handDetection(frame,hands)
         cv2.imshow("Hands Detected",frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -41,7 +40,6 @@ def handDetection(frame,hands):
     result = hands.process(frame_BGR)
     left_hand_landmark = detectLeftHand(result)
     draw_landmarks(frame,left_hand_landmark,HAND_CONNECTIONS)
-    return left_hand_landmark
 
 if __name__ == "__main__":
     connecttoVehicle()
