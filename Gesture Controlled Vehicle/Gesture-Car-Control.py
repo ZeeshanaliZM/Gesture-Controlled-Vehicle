@@ -28,15 +28,20 @@ def connecttoVehicle():
         break
     print(response.text)
 
-def drawLandmarksonImage(result,frame):
+def drawLandmarksonImage(result,frame,index):
+    draw_landmarks(frame,result.multi_hand_landmarks[index],HAND_CONNECTIONS)
+
+def detectLeftHand(result,frame):
     if result.multi_handedness:
-        for hand_landmarks in result.multi_hand_landmarks:
-            draw_landmarks(frame,hand_landmarks,HAND_CONNECTIONS)
+        for idx,hand in enumerate(result.multi_handedness):
+            if hand.classification[0].label == "Left":
+                drawLandmarksonImage(result,frame,idx)
+                break
 
 def handDetection(frame,hands):
     frame_BGR = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
     result = hands.process(frame_BGR)
-    drawLandmarksonImage(result,frame)
+    detectLeftHand(result,frame)
 
 if __name__ == "__main__":
     connecttoVehicle()
