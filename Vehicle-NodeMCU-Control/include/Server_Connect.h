@@ -33,8 +33,13 @@ void forwardHandler(){
     Serial.println("Move Forward");
 }
 
+void backwardHandler(){
+    server.send(200,"text/plain","");
+    Serial.println("Move Backward");
+}
 
 void URLHandler(){
     server.on("/",rootHandle);
     server.on("/moveForward",forwardHandler);
+    server.on("/moveBackward",backwardHandler);
 }
