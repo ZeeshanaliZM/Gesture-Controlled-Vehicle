@@ -8,7 +8,7 @@ ESP8266_URL = "http://esp8266.local:80/"
 
 def main():
     camera = cv2.VideoCapture(0)
-    hands = Hands(model_complexity=0)
+    hands = Hands(model_complexity=1)
     while camera.isOpened():
         frame = cv2.flip(camera.read()[1],1)
         handDetection(frame,hands)
