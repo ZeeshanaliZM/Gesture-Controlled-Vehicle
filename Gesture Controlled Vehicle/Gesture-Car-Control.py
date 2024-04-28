@@ -32,10 +32,23 @@ def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
         if hand.classification[0].label == "Left":
             draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
+            forward_backward_control(result.multi_hand_landmarks)
+
 def getCoordinatesofPoints(hand_landmarks,start,stop,step):
     return {"x": np.array([points.x for points in hand_landmarks[0].landmark[start:stop:step]]),
             "y": np.array([points.y for points in hand_landmarks[0].landmark[start:stop:step]]) }
 
+def forward_backward_control(left_hand_landmarks):
+    global ESP8266_URL
+    finger_tip_coord = getCoordinatesofPoints(left_hand_landmarks,8,24,4)
+    finger_dip_coord = getCoordinatesofPoints(left_hand_landmarks,7,23,4)
+    diff_coord_y = finger_tip_coord["y"] - finger_dip_coord["y"]
+
+    if np.all(diff_coord_y>0):
+        get(ESP8266_URL+"moveForward")
+    if np.all(diff_coord_y<0):
+        get(ESP8266_URL+"moveBackward")
+        
 
 def handDetection(frame,hands):
     frame_BGR = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
