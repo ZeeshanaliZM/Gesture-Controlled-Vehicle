@@ -28,14 +28,11 @@ def connecttoVehicle():
         break
     print(response.text)
 
-def drawLandmarksonImage(result,frame,index):
-    draw_landmarks(frame,result.multi_hand_landmarks[index],HAND_CONNECTIONS)
-
 def detectLeftHand(result,frame):
     if result.multi_handedness:
         for idx,hand in enumerate(result.multi_handedness):
             if hand.classification[0].label == "Left":
-                drawLandmarksonImage(result,frame,idx)
+                draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
                 break
 
 def handDetection(frame,hands):
