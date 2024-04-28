@@ -39,7 +39,7 @@ def handDetection(frame,hands):
     result = hands.process(frame_BGR)
     if result.multi_handedness:
         left_hand_landmark = detectLeftHand(result)
-    draw_landmarks(frame,left_hand_landmark,HAND_CONNECTIONS)
+        draw_landmarks(frame,left_hand_landmark,HAND_CONNECTIONS)
 
 if __name__ == "__main__":
     connecttoVehicle()
