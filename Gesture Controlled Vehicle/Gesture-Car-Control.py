@@ -32,12 +32,12 @@ def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
         if hand.classification[0].label == "Left":
             draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
-            motionControl(result.multi_hand_landmarks)
+            motionControl(result.multi_hand_landmarks[idx])
         
 
 def getCoordinatesofPoints(hand_landmarks,start,stop,step):
-    return {"x": np.array([points.x for points in hand_landmarks[0].landmark[start:stop:step]]),
-            "y": np.array([points.y for points in hand_landmarks[0].landmark[start:stop:step]]) }
+    return {"x": np.array([points.x for points in hand_landmarks.landmark[start:stop:step]]),
+            "y": np.array([points.y for points in hand_landmarks.landmark[start:stop:step]]) }
 
 def motionControl(left_hand_landmarks):
     global ESP8266_URL
