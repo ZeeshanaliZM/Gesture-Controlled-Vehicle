@@ -4,7 +4,7 @@ void setup(){
     Serial.begin(115200);
     connecttoWifi();
     setupmDNS();
-    routeHandler(); 
+    URLHandler(); 
 }
 
 void loop(){
