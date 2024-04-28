@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-import requests
-from mediapipe import solutions
+from requests import get, exceptions
 
 ESP8266_URL = "http://esp8266.local:80/"
 
@@ -19,8 +18,8 @@ def main():
 def connecttoVehicle():
     while True:
         try:
-            response = requests.get(ESP8266_URL)
-        except requests.exceptions.ConnectionError:
+            response = get(ESP8266_URL)
+        except exceptions.ConnectionError:
             print("Connection Error. Reconnecting...")
             continue
         break
