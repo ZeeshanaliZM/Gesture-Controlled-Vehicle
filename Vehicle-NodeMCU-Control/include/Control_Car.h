@@ -47,3 +47,14 @@ void moveBackward(){
     setMotorSpeed_Direction(DRIVER_EN2_BACK_SPEED,255);
 }
 
+void moveLeft(){
+    digitalWrite(DRIVER_IN2_FRONT,HIGH);
+    digitalWrite(DRIVER_IN1_FRONT,LOW);
+    setMotorSpeed_Direction(DRIVER_EN1_FRONT_DIRECTION,255);
+}
+
+void moveRight(){
+    digitalWrite(DRIVER_IN2_FRONT,LOW);
+    digitalWrite(DRIVER_IN1_FRONT,HIGH);
+    setMotorSpeed_Direction(DRIVER_EN1_FRONT_DIRECTION,255);
+}
