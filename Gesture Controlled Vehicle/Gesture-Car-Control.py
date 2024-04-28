@@ -46,8 +46,10 @@ def motionControl(left_hand_landmarks):
     diff_coord_y = fingers_tip_coord["y"] - fingers_dip_coord["y"]
 
     if np.all(diff_coord_y>0):
+        # print("Move Forward")
         get(ESP8266_URL+"moveForward")
     if np.all(diff_coord_y<0):
+        # print("Move Backward")
         get(ESP8266_URL+"moveBackward")
         
 
