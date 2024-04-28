@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from requests import get, exceptions
-from mediapipe.python.solutions.hands import Hands
+from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 
 ESP8266_URL = "http://esp8266.local:80/"
 
@@ -10,7 +10,7 @@ def main():
     hands = Hands(model_complexity=0)
     while camera.isOpened():
         frame = cv2.flip(camera.read()[1],1)
-        handDetection(frame)
+        handDetection(frame,hands)
         cv2.imshow("Live Stream",frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -27,7 +27,7 @@ def connecttoVehicle():
         break
     print(response.text)
 
-def handDetection(frame):
+def handDetection(frame,hands):
     frame_BGR = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
     result = hands.process(frame_BGR)
     print(result)
