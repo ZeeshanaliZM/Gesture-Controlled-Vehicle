@@ -12,7 +12,7 @@ def main():
     while camera.isOpened():
         frame = cv2.flip(camera.read()[1],1)
         handDetection(frame,hands)
-        cv2.imshow("Live Stream",frame)
+        cv2.imshow("Hands Detected",frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     camera.release()
