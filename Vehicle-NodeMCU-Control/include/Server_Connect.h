@@ -16,7 +16,7 @@ void connecttoWifi(){
     }
 
 void rootHandle(){
-    server.send(200,"text/plain","Connection with Vehicle Estasblished.\nGesture Controlled Vehcile online.");
+    server.send(200,"text/plain","Connection with Vehicle Estasblished.\nGesture Controlled Vehicle online.");
 }
 
 void forwardHandler(){
