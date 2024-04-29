@@ -87,4 +87,4 @@ def handDetection(frame,hands):
 
 if __name__ == "__main__":
     connecttoVehicle()
-#    main()
+    main()
