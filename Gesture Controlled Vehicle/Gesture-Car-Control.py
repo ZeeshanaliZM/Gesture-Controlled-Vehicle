@@ -41,6 +41,11 @@ def connecttoVehicle():
 def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
         if hand.classification[0].label == "Left":
+            draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
+            motionControl(result.multi_hand_landmarks[idx])
+        else:
+            controlSpeed(result,idx)
+
 def controlSpeed(result,idx):
     diff_thumb_index = (diffCoordinates(result.multi_hand_landmarks[idx],[4,5,1],[8,9,1])-19)/22
     diff_thumb_index_norm = abs(round(int((diff_thumb_index*255)/10)))
