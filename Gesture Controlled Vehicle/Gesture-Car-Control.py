@@ -4,7 +4,7 @@ from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks
 
-ESP8266_URL = "http://192.168.137.122:80/"
+ESP8266_URL = ""
 frame_shape = {}
 
 def getframeShape(frame):
