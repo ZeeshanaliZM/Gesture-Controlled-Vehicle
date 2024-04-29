@@ -16,7 +16,15 @@ void connecttoWifi(){
     }
 
 void rootHandle(){
-    server.send(200,"text/plain","Connection with Vehicle Estasblished.\nGesture Controlled Vehicle online.");
+    server.send(200,"text/plain",WiFi.localIP().toString());
+}
+
+void setupmDNS(){
+    if (!MDNS.begin("esp8266")) {
+    Serial.println("Error setting up MDNS responder!");
+    while (1) { delay(1000); }
+  }
+  Serial.println("mDNS responder started");
 }
 
 void forwardHandler(){
