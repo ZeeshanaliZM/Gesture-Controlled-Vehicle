@@ -51,14 +51,13 @@ def getCoordinatesofPoints(hand_landmarks,start,stop,step):
 
 def motionControl(left_hand_landmarks):
     global ESP8266_URL
-    fingers_tip_coord = getCoordinatesofPoints(left_hand_landmarks,8,24,4)
-    fingers_dip_coord = getCoordinatesofPoints(left_hand_landmarks,7,23,4)
-    diff_coord_y = fingers_tip_coord["y"] - fingers_dip_coord["y"]
+    tip_dip_diff_coord_y = getCoordinatesofPoints(left_hand_landmarks,8,24,4)["y"] - getCoordinatesofPoints(left_hand_landmarks,7,23,4)["y"]
+    tip_mcp_diff_coord_y = getCoordinatesofPoints(left_hand_landmarks,8,24,4)["y"] - getCoordinatesofPoints(left_hand_landmarks,5,21,4)["y"]
 
-    if np.all(diff_coord_y>0):
+    if np.all(tip_dip_diff_coord_y>0):
         # print("Move Forward")
         get(ESP8266_URL+"moveForward")
-    if np.all(diff_coord_y<0):
+    if np.all(tip_mcp_diff_coord_y<0):
         # print("Move Backward")
         get(ESP8266_URL+"moveBackward")
         
