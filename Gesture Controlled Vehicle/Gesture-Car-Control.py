@@ -4,7 +4,7 @@ from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks
 
-ESP8266_URL = ""
+ESP8266_URL = "http://{}:80/"
 frame_shape = {}
 
 def getframeShape(frame):
@@ -29,6 +29,7 @@ def main():
     cv2.destroyAllWindows()
 
 def connecttoVehicle():
+    global ESP8266_URL
     while True:
         try:
             response = get("http://esp8266.local:80/")
@@ -36,7 +37,7 @@ def connecttoVehicle():
             print("Connection Error. Reconnecting...")
             continue
         break
-    print(response.text)
+    ESP8266_URL = ESP8266_URL.format(response.text)
 
 def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
@@ -86,4 +87,4 @@ def handDetection(frame,hands):
 
 if __name__ == "__main__":
     connecttoVehicle()
-    main()
+#    main()
