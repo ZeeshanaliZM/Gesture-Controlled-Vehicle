@@ -5,12 +5,19 @@ from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks
 
 ESP8266_URL = "http://192.168.137.122:80/"
+frame_shape = {}
+
+def getframeShape(frame):
+    if not frame_shape:
+        frame_shape["width"] = frame.shape[1]
+        frame_shape["height"] = frame.shape[0]
 
 def main():
     camera = cv2.VideoCapture(0)
     hands = Hands(model_complexity=0)
     while camera.isOpened():
         frame = cv2.flip(camera.read()[1],1)
+        getframeShape(frame)
         handDetection(frame,hands)
         cv2.imshow("Hands Detected",frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
