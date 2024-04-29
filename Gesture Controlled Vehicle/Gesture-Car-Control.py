@@ -31,7 +31,7 @@ def main():
 def connecttoVehicle():
     while True:
         try:
-            response = get(ESP8266_URL)
+            response = get("http://esp8266.local:80/")
         except exceptions.ConnectionError:
             print("Connection Error. Reconnecting...")
             continue
