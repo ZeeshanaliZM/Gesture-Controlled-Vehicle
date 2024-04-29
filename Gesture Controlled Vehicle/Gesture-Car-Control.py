@@ -41,9 +41,15 @@ def connecttoVehicle():
 def detectLeftHand(result,frame):
     for idx,hand in enumerate(result.multi_handedness):
         if hand.classification[0].label == "Left":
-            draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
-            motionControl(result.multi_hand_landmarks[idx])
-        
+def controlSpeed(result,idx):
+    diff_thumb_index = (diffCoordinates(result.multi_hand_landmarks[idx],[4,5,1],[8,9,1])-19)/22
+    diff_thumb_index_norm = abs(round(int((diff_thumb_index*255)/10)))
+    if diff_thumb_index_norm<30:
+        # print("Set Speed as 0")
+        get(ESP8266_URL,params={"speed":0})
+    else:
+        # print("Set speed as {}".format(diff_thumb_index_norm))
+        get(ESP8266_URL,params={"speed":diff_thumb_index_norm})
 
 def getCoordinatesofPoints(hand_landmarks,start,stop,step):
     return {"x": np.multiply(np.array([points.x for points in hand_landmarks.landmark[start:stop:step]]),frame_shape["width"]),
