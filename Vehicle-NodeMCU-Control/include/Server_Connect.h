@@ -45,6 +45,12 @@ void leftHandler(){
     moveLeft();
 }
 
+void rightHandler(){
+    server.send(200,"text/plain","");
+    Serial.println("Move Right");
+    moveRight();
+}
+
 void URLHandler(){
     server.on("/",rootHandle);
     server.on("/moveForward",forwardHandler);
