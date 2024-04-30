@@ -44,6 +44,8 @@ def detectLeftHand(result,frame):
         if hand.classification[0].label == "Left":
             draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
             motionControl(result.multi_hand_landmarks[idx])
+            directionControl(result.multi_hand_landmarks[idx])
+
         else:
             controlSpeed(result,idx)
 
@@ -56,6 +58,10 @@ def controlSpeed(result,idx):
     else:
         # print("Set speed as {}".format(diff_thumb_index_norm))
         get(ESP8266_URL+"speedControl",params={"speed":diff_thumb_index_norm})
+
+def directionControl(landmark):
+    palm_finger_x = diffCoordinates(landmark,[9,10,1],[0,1,1],"x");
+
 
 def getCoordinatesofPoints(hand_landmarks,start,stop,step):
     return {"x": np.multiply(np.array([points.x for points in hand_landmarks.landmark[start:stop:step]]),frame_shape["width"]),
