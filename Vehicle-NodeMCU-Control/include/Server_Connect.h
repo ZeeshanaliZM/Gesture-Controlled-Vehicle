@@ -50,9 +50,15 @@ void rightHandler(){
     Serial.println("Move Right");
     moveRight();
 }
-
+void speedControlHandler(){
+    int speed = server.arg("speed").toInt();
+    server.send(200,"text/plain","");
+    Serial.println("Change speed");
+    setMotorSpeed_Direction(DRIVER_EN2_BACK_SPEED,speed);
+}
 void URLHandler(){
     server.on("/",rootHandle);
     server.on("/moveForward",forwardHandler);
     server.on("/moveBackward",backwardHandler);
+    server.on("/speedControl",speedControlHandler);
 }
