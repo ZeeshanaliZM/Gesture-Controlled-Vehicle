@@ -61,10 +61,10 @@ def getCoordinatesofPoints(hand_landmarks,start,stop,step):
     return {"x": np.multiply(np.array([points.x for points in hand_landmarks.landmark[start:stop:step]]),frame_shape["width"]),
             "y": np.multiply(np.array([points.y for points in hand_landmarks.landmark[start:stop:step]]),frame_shape["height"]) }
 
-def diffCoordinates(landmarks,range1,range2):
+def diffCoordinates(landmarks,range1,range2,axis="y"):
     return getCoordinatesofPoints(landmarks,range1[0],
-                                  range1[1],range1[2])['y']-getCoordinatesofPoints(landmarks,range2[0],
-                                                                                   range2[1],range2[2])['y']
+                                  range1[1],range1[2])[axis]-getCoordinatesofPoints(landmarks,range2[0],
+                                                                                   range2[1],range2[2])[axis]
 
 def motionControl(left_hand_landmarks):
     global ESP8266_URL
