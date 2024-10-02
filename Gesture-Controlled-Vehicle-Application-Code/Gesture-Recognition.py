@@ -27,4 +27,4 @@ class Connection:
         print("Connection with vehicle Established")
         print("URL of Server on ESP8266 = "+self.URL)
 
-    
+#Class to create the Camera object for Gesture Recognition
