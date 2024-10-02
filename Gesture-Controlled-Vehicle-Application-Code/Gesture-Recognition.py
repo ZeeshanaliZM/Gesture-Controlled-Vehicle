@@ -1,3 +1,4 @@
+from requests import get, exceptions
 
 #Creation of class Connection to connect to the μC
 class Connection:
@@ -11,4 +12,19 @@ class Connection:
         self.mDNS = ESP8266_mDNS_URL
         self.IP = None
         self.URL = "http://{}:"+f"{port}"
+
+    #Class method connecttoVehicle to send GET request to the μC using its mDNS URL
+    def connectToVehicle(self):
+        while True:
+            try:
+                response = get(self.mDNS)
+            except exceptions.ConnectionError:
+                print("Connection Error. Reconnecting...")
+                continue
+            break
+        self.IP = response.text
+        self.URL = self.URL.format(self.IP)
+        print("Connection with vehicle Established")
+        print("URL of Server on ESP8266 = "+self.URL)
+
     
