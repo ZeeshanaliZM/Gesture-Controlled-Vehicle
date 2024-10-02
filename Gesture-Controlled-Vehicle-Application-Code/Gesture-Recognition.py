@@ -27,4 +27,4 @@ class Connection:
         print("Connection with vehicle Established")
         print("URL of Server on ESP8266 = "+self.URL)
 
-    
+#Class HandDetection to detect and process hands in images and issue commands to μC
