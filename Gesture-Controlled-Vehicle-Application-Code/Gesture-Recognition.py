@@ -1,4 +1,5 @@
 from requests import get, exceptions
+from cv2 import VideoCapture
 
 #Creation of class Connection to connect to the μC
 class Connection:
@@ -37,4 +38,12 @@ class Camera:
         '''
         self.frame_shape = None
         self.camera = initCamera()
+    
+    #Function initCamera() return the VideoCapture() object instantiated.
+    #Tries to detect an external camera first (arg=1), if NOT FOUND, then uses the primary camera (arg=0)
+    def initCamera(self):
+        try:
+            return cv2.VideoCapture(1)
+        except:
+            return cv2.VideoCapture(0)
     
