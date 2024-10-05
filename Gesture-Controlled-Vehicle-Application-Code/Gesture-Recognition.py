@@ -28,3 +28,13 @@ class Connection:
         print("URL of Server on ESP8266 = "+self.URL)
 
 #Class HandDetection to detect and process hands in images and issue commands to μC
+class HandDetection:
+    def __init__(self):
+        '''
+        Data Members:
+        hands - Stores the Hands() object to use the HandLandmark detection model 
+        '''
+        self.hands = Hands(model_complexity=0,
+                             min_detection_confidence=0.5,
+                                min_tracking_confidence=0.5)
+    
