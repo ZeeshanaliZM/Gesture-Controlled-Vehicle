@@ -28,3 +28,13 @@ class Connection:
         print("URL of Server on ESP8266 = "+self.URL)
 
 #Class to create the Camera object for Gesture Recognition
+class Camera:
+    def __init__(self):
+        '''
+        Data Members:
+        frame_shape - Stores the shape of the image (rows,cols)
+        camera      - Stores the VideoCapture() object to control the camera, images and videos
+        '''
+        self.frame_shape = None
+        self.camera = initCamera()
+    
