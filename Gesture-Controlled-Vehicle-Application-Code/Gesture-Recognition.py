@@ -38,3 +38,10 @@ class HandDetection:
                              min_detection_confidence=0.5,
                                 min_tracking_confidence=0.5)
     
+    #method detectHands() which checks for the presence of hands in the frame
+    def detectHands(self,frame):
+        result = self.hands.process(
+                    cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+
+        if result.multi_handedness:
+            self.vehicleCtrl(result,frame)
