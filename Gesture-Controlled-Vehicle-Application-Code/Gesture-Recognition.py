@@ -1,5 +1,8 @@
 from requests import get, exceptions
 from cv2 import VideoCapture
+from collections import namedtuple
+
+FrameShape = namedtuple('Frame Shape',['width','height'])
 
 #Creation of class Connection to connect to the μC
 class Connection:
@@ -46,4 +49,9 @@ class Camera:
             return cv2.VideoCapture(1)
         except:
             return cv2.VideoCapture(0)
+    
+    #Function getFrameShape() returns the shape of the image frame
+    def getFrameShape(self,frame):
+        self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
+    
     
