@@ -31,15 +31,22 @@ class Connection:
 
 #Class HandDetection to detect and process hands in images and issue commands to μC
 class HandDetection:
-    def __init__(self):
+    def __init__(self,LOW,HIGH):
         '''
         Data Members:
         hands - Stores the Hands() object to use the HandLandmark detection model 
+        LOW   - Stores the LOW Point for minimum speed
+        HIGH  - Stores the HIGH POint for maximum speed 
+        centre - Stores the actual location of the point used for speed control
         '''
         self.hands = Hands(model_complexity=0,
                              min_detection_confidence=0.5,
                                 min_tracking_confidence=0.5)
-    
+
+        #Enter LOW and HIGH points for speed Control
+        self.LOW = self.initPoints(LOW)
+        self.HIGH = self.initPoints(HIGH)
+        self.centre = None
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
         result = self.hands.process(
