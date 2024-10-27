@@ -1,6 +1,10 @@
 from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks,_normalized_to_pixel_coordinates
+from collections import namedtuple
+from numpy import array
+
+Point = namedtuple('Point',['x','y'])
 
 #Creation of class Connection to connect to the μC
 class Connection:
@@ -44,9 +48,12 @@ class HandDetection:
                                 min_tracking_confidence=0.5)
 
         #Enter LOW and HIGH points for speed Control
-        self.LOW = self.initPoints(LOW)
-        self.HIGH = self.initPoints(HIGH)
+        self.LOW = Point(*LOW)
+        self.HIGH = Point(*HIGH)
+        self.landmarks = None
         self.centre = None
+        self.ld_type = [('x',int),('y',int)]
+
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
         result = self.hands.process(
