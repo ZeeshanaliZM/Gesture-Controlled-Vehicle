@@ -115,3 +115,13 @@ class HandDetection:
             else:
                 pass
                 self.speedCtrl(result,idx)
+
+class GCV:
+    def __init__(self,ESP_URL,ESP_Port):
+        self.Connection = Connection(ESP_URL,ESP_Port)
+        self.HandDetection = HandDetection((0,100),(0,0)) 
+        self.Camera = Camera(0,self.HandDetection)
+
+if __name__ == "__main__":
+    GCV("http://esp8266.local:80/",80)
+ 
