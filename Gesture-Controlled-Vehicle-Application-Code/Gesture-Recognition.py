@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 Point = namedtuple('Point',['x','y'])
-FrameShape = namedtuple('Frame Shape',['width','height'])
+FrameShape = namedtuple('Frame_Shape',['width','height'])
 
 #Creation of class Connection to connect to the μC
 class Connection:
