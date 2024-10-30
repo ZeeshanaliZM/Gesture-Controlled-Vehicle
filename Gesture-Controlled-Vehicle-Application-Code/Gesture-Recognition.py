@@ -88,6 +88,7 @@ class HandDetection:
 
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
+        if not self.frame_shape: self.getFrameShape(frame)
         result = self.hands.process(
                     cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
 
