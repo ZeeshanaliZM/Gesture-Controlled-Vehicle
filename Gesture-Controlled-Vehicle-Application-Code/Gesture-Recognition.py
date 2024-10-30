@@ -1,7 +1,11 @@
 from requests import get, exceptions
-from cv2 import VideoCapture, flip, waitKey, destroyAllWindows
+from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
+from mediapipe.python.solutions.drawing_utils import draw_landmarks,_normalized_to_pixel_coordinates
 from collections import namedtuple
+from cv2 import VideoCapture, flip, waitKey, destroyAllWindows
+import numpy as np
 
+Point = namedtuple('Point',['x','y'])
 FrameShape = namedtuple('Frame Shape',['width','height'])
 
 #Creation of class Connection to connect to the μC
@@ -67,3 +71,50 @@ class Camera:
                 break
         self.camera.release()
         cv2.destroyAllWindows()
+
+#Class HandDetection to detect and process hands in images and issue commands to μC
+class HandDetection:
+    def __init__(self,LOW,HIGH):
+        '''
+        Data Members:
+        hands - Stores the Hands() object to use the HandLandmark detection model 
+        LOW   - Stores the LOW Point for minimum speed
+        HIGH  - Stores the HIGH POint for maximum speed 
+        centre - Stores the actual location of the point used for speed control
+        '''
+        self.hands = Hands(model_complexity=0,
+                             min_detection_confidence=0.5,
+                                min_tracking_confidence=0.5)
+
+        #Enter LOW and HIGH points for speed Control
+        self.LOW = Point(*LOW)
+        self.HIGH = Point(*HIGH)
+        self.landmarks = None
+        self.centre = None
+        self.ld_type = [('x',int),('y',int)]
+
+    #method detectHands() which checks for the presence of hands in the frame
+    def detectHands(self,frame):
+        result = self.hands.process(
+                    cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+
+        if result.multi_handedness:
+            self.vehicleCtrl(result,frame)
+
+    #method vehicleCtr() which processes the frame and issues commands to the vehicle for linear, rotational and speed control
+    def vehicleCtrl(self,result,frame):
+        for idx,hand in enumerate(result.multi_handedness):
+            landmarks = result.multi_hand_landmarks[idx]
+            draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
+            self.landmarks = array([
+                                _normalized_to_pixel_coordinates(
+                                    points.x,points.y,frame_shape['width'],frame_shape['height'])
+                                        for points in landmarks.landmark])
+
+            if hand.classification[0].label == "Left":
+                pass
+                self.lnrMotionCtrl(connection)
+                self.rotMotionCtrl(connection)
+            else:
+                pass
+                self.speedCtrl(result,idx)
