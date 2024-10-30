@@ -82,6 +82,10 @@ class HandDetection:
         self.frame_shape = None
         self.ld_type = [('x',int),('y',int)]
 
+    #Function getFrameShape() returns the shape of the image frame
+    def getFrameShape(self,frame):
+        self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
+
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
         result = self.hands.process(
