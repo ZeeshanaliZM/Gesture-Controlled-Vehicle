@@ -79,6 +79,7 @@ class HandDetection:
         self.HIGH = Point(*HIGH)
         self.landmarks = None
         self.centre = None
+        self.frame_shape = None
         self.ld_type = [('x',int),('y',int)]
 
     #method detectHands() which checks for the presence of hands in the frame
