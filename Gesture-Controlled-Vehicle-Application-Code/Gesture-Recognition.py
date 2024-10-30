@@ -61,15 +61,21 @@ class HandDetection:
 
         if result.multi_handedness:
             self.vehicleCtrl(result,frame)
-    
+
     #method vehicleCtr() which processes the frame and issues commands to the vehicle for linear, rotational and speed control
     def vehicleCtrl(self,result,frame):
         for idx,hand in enumerate(result.multi_handedness):
-            draw_landmarks(frame,result.multi_hand_landmarks[idx],HAND_CONNECTIONS)
+            landmarks = result.multi_hand_landmarks[idx]
+            draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
+            self.landmarks = array([
+                                _normalized_to_pixel_coordinates(
+                                    points.x,points.y,frame_shape['width'],frame_shape['height'])
+                                        for points in landmarks.landmark])
+
             if hand.classification[0].label == "Left":
                 pass
-                self.lnrMotionCtrl(result.multi_hand_landmarks[idx])
-                self.rotMotionCtrl(result,idx)
+                self.lnrMotionCtrl(connection)
+                self.rotMotionCtrl(connection)
             else:
                 pass
                 self.speedCtrl(result,idx)
