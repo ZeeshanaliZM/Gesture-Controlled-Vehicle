@@ -54,4 +54,15 @@ class Camera:
     def getFrameShape(self,frame):
         self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
     
-    
+    def processFrames(self):
+        while self.camera.isOpened():
+            frame = cv2.flip(camera.read()[1],1)
+            if not frame_shape: self.getFrameShape(frame)
+            #Perform Hand Detection
+
+            #Perform Hand Detection
+            cv2.imshow("Frame Detected",image)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        self.camera.release()
+        cv2.destroyAllWindows()
