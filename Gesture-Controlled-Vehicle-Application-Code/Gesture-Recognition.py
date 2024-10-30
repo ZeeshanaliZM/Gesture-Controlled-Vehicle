@@ -1,5 +1,5 @@
 from requests import get, exceptions
-from cv2 import VideoCapture
+from cv2 import VideoCapture, flip, waitKey, destroyAllWindows
 from collections import namedtuple
 
 FrameShape = namedtuple('Frame Shape',['width','height'])
