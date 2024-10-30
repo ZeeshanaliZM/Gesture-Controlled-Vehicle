@@ -78,9 +78,9 @@ class HandDetection:
         self.LOW = Point(*LOW)
         self.HIGH = Point(*HIGH)
         self.landmarks = None
-        self.centre = None
+        self.centre = np.array(LOW,dtype=[('x',int),('y',int)])
+        self.circle = "({}-{})**2+({}-{})**2 - {}**2"
         self.frame_shape = None
-        self.ld_type = [('x',int),('y',int)]
 
     #Function getFrameShape() returns the shape of the image frame
     def getFrameShape(self,frame):
