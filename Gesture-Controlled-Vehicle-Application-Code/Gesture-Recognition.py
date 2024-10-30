@@ -38,27 +38,15 @@ class Connection:
 
 #Class to create the Camera object for Gesture Recognition
 class Camera:
-    def __init__(self):
+    def __init__(self,type,handDetection):
         '''
         Data Members:
-        frame_shape - Stores the shape of the image (rows,cols)
         camera      - Stores the VideoCapture() object to control the camera, images and videos
         '''
-        self.frame_shape = None
-        self.camera = initCamera()
+        #Create VideoCapture Class object to interface to camera
+        self.camera = cv2.VideoCapture(type)
+        self.processFrames(handDetection)
     
-    #Function initCamera() return the VideoCapture() object instantiated.
-    #Tries to detect an external camera first (arg=1), if NOT FOUND, then uses the primary camera (arg=0)
-    def initCamera(self):
-        try:
-            return cv2.VideoCapture(1)
-        except:
-            return cv2.VideoCapture(0)
-    
-    #Function getFrameShape() returns the shape of the image frame
-    def getFrameShape(self,frame):
-        self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
-
     #Function processFrame() process the frame to detect Hands 
     def processFrames(self):
         while self.camera.isOpened():
