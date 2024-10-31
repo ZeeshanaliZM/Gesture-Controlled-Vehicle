@@ -45,7 +45,6 @@ class Camera:
     def processFrames(self):
         while self.camera.isOpened():
             frame = cv2.flip(camera.read()[1],1)
-            if not frame_shape: self.getFrameShape(frame)
             #Perform Hand Detection
 
             #Perform Hand Detection
