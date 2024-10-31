@@ -66,14 +66,14 @@ class HandDetection:
         # print(f"Low Speed = {self.LOW} and High Speed = {self.HIGH}")
 
     #method detectHands() which checks for the presence of hands in the frame
-    def detectHands(self,frame):
+    def detectHands(self,frame,connection):
         if not self.frame_shape: self.getFrameShape()
         if not self.LOW: self.setSpeedLimit()
         result = self.hands.process(
                     cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
 
         if result.multi_handedness:
-            self.vehicleCtrl(result,frame)
+            self.vehicleCtrl(result,frame,connection)
 
     #method vehicleCtr() which processes the frame and issues commands to the vehicle for linear, rotational and speed control
     def vehicleCtrl(self,result,frame):
