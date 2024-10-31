@@ -1,5 +1,5 @@
 from requests import get, exceptions
-from cv2 import VideoCapture, flip, waitKey, destroyAllWindows
+import cv2
 from collections import namedtuple
 
 FrameShape = namedtuple('Frame Shape',['width','height'])
@@ -34,36 +34,23 @@ class Connection:
 
 #Class to create the Camera object for Gesture Recognition
 class Camera:
-    def __init__(self):
+    def __init__(self,type,handDetection,connection):
         '''
         Data Members:
-        frame_shape - Stores the shape of the image (rows,cols)
-        camera      - Stores the VideoCapture() object to control the camera, images and videos
+        camera - Stores the VideoCapture() object to control the camera, images and videos
         '''
-        self.frame_shape = None
-        self.camera = initCamera()
-    
-    #Function initCamera() return the VideoCapture() object instantiated.
-    #Tries to detect an external camera first (arg=1), if NOT FOUND, then uses the primary camera (arg=0)
-    def initCamera(self):
-        try:
-            return cv2.VideoCapture(1)
-        except:
-            return cv2.VideoCapture(0)
-    
-    #Function getFrameShape() returns the shape of the image frame
-    def getFrameShape(self,frame):
-        self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
+        #Create VideoCapture Class object to interface to camera
+        self.camera = cv2.VideoCapture(type)
+        self.processFrames(handDetection,connection)
 
     #Function processFrame() process the frame to detect Hands 
-    def processFrames(self):
+    def processFrames(self,handDetection,connection):
         while self.camera.isOpened():
             frame = cv2.flip(camera.read()[1],1)
-            if not frame_shape: self.getFrameShape(frame)
             #Perform Hand Detection
-
+            handDetection.detectHands(frame,connection)
             #Perform Hand Detection
-            cv2.imshow("Frame Detected",image)
+            cv2.imshow("Frame Detected",frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         self.camera.release()
