@@ -78,10 +78,12 @@ class HandDetection:
         for idx,hand in enumerate(result.multi_handedness):
             landmarks = result.multi_hand_landmarks[idx]
             draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
-            self.landmarks = array([
-                                _normalized_to_pixel_coordinates(
-                                    points.x,points.y,frame_shape['width'],frame_shape['height'])
-                                        for points in landmarks.landmark])
+            try:
+                self.landmarks = np.array([
+                                        _normalized_to_pixel_coordinates(
+                                            points.x,points.y,frame_shape['width'],frame_shape['height'])
+                                                for points in landmarks.landmark])
+            except: print("Landmarks Missing")
 
             if hand.classification[0].label == "Left":
                 pass
