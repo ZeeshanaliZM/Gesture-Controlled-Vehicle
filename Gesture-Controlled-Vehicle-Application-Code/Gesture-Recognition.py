@@ -91,7 +91,7 @@ class HandDetection:
                 self.rotMotionCtrl(connection)
             else:
                 pass
-                self.speedCtrl(result,idx)
+                self.speedCtrl(connection)
     
     #method lnrMotionCtrl() contains the logic for linear motion control
     def lnrMotionCtrl(self,connection):
