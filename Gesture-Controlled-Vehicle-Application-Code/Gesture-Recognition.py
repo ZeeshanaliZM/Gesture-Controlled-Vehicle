@@ -36,10 +36,8 @@ class Camera:
     def __init__(self):
         '''
         Data Members:
-        frame_shape - Stores the shape of the image (rows,cols)
-        camera      - Stores the VideoCapture() object to control the camera, images and videos
+        camera - Stores the VideoCapture() object to control the camera, images and videos
         '''
-        self.frame_shape = None
         self.camera = initCamera()
     
     #Function initCamera() return the VideoCapture() object instantiated.
