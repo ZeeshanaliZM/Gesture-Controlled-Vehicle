@@ -48,10 +48,6 @@ class Camera:
         except:
             return cv2.VideoCapture(0)
     
-    #Function getFrameShape() returns the shape of the image frame
-    def getFrameShape(self,frame):
-        self.frame_shape = FrameShape(frame.shape[0],frame.shape[1])
-
     #Function processFrame() process the frame to detect Hands 
     def processFrames(self):
         while self.camera.isOpened():
