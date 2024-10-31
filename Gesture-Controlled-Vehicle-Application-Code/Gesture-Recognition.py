@@ -48,7 +48,7 @@ class Camera:
             #Perform Hand Detection
 
             #Perform Hand Detection
-            cv2.imshow("Frame Detected",image)
+            cv2.imshow("Frame Detected",frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         self.camera.release()
