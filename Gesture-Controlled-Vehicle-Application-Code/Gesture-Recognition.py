@@ -16,6 +16,7 @@ class Connection:
         self.mDNS = ESP8266_mDNS_URL
         self.IP = None
         self.URL = "http://{}:"+f"{port}"
+        self.connectToVehicle()
 
     #Class method connecttoVehicle to send GET request to the μC using its mDNS URL
     def connectToVehicle(self):
