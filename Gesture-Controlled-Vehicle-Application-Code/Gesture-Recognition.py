@@ -38,16 +38,9 @@ class Camera:
         Data Members:
         camera - Stores the VideoCapture() object to control the camera, images and videos
         '''
-        self.camera = initCamera()
-    
-    #Function initCamera() return the VideoCapture() object instantiated.
-    #Tries to detect an external camera first (arg=1), if NOT FOUND, then uses the primary camera (arg=0)
-    def initCamera(self):
-        try:
-            return cv2.VideoCapture(1)
-        except:
-            return cv2.VideoCapture(0)
-    
+        #Create VideoCapture Class object to interface to camera
+        self.camera = cv2.VideoCapture(type)
+
     #Function processFrame() process the frame to detect Hands 
     def processFrames(self):
         while self.camera.isOpened():
