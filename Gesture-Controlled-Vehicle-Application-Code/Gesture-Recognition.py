@@ -58,6 +58,7 @@ class Camera:
                 break
         self.camera.release()
         cv2.destroyAllWindows()
+        
 #Class HandDetection to detect and process hands in images and issue commands to μC
 class HandDetection:
     def __init__(self):
