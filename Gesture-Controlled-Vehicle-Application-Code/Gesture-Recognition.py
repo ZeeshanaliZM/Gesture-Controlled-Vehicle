@@ -54,6 +54,9 @@ class HandDetection:
         self.circle = "({}-{})**2+({}-{})**2 - {}**2"
         self.radius = 25
 
+    #method getFrameShape() returns the shape of the image frame
+    def getFrameShape(self,frame):
+        self.frame_shape = FrameShape(frame.shape[1],frame.shape[0])
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
         result = self.hands.process(
