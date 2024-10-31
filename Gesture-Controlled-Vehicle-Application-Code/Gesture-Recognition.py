@@ -43,11 +43,16 @@ class HandDetection:
         LOW   - Stores the LOW Point for minimum speed
         HIGH  - Stores the HIGH POint for maximum speed 
         centre - Stores the actual location of the point used for speed control
+        frame_shape - To store the shape of the frame
+        circle - Contains the equation of the circle evaluated for the speed control condition check
+        radius - Contains the radius of the circle used for previous data member
         '''
         self.hands = Hands(model_complexity=0,
                              min_detection_confidence=0.5,
                                 min_tracking_confidence=0.5)
-        self.LOW = self.HIGH = self.landmarks = self.centre = None
+        self.LOW = self.HIGH = self.landmarks = self.centre = self.frame_shape = None
+        self.circle = "({}-{})**2+({}-{})**2 - {}**2"
+        self.radius = 25
 
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
