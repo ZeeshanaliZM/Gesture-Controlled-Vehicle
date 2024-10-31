@@ -104,3 +104,14 @@ class HandDetection:
         if np.all(tip_mcp_diff_coord_y>0):
             #print("Move Forward")
             get(connection.URL+"/moveBackward")
+    
+    #method rotMotionCtrl() contains the logic for direction contol of the vehicle
+    def rotMotionCtrl(self,connection):
+        try:
+            ref_line = np.array([1,0])
+            pf_vector = self.landmarks[17]-self.landmarks[0]
+            angle = np.rad2deg(np.arcsin(ref_line.dot(pf_vector)/np.linalg.norm(pf_vector)))
+            PWM = np.floor(255*angle/90)
+            #print(f"Direction Value = {PWM}")
+            get(connection.URL+"/DirectionControl",params={"Direction":PWM})
+        except: print("Realign Hand")
