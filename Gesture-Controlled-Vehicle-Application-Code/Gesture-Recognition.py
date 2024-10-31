@@ -42,11 +42,11 @@ class Camera:
         self.camera = cv2.VideoCapture(type)
 
     #Function processFrame() process the frame to detect Hands 
-    def processFrames(self):
+    def processFrames(self,handDetection,connection):
         while self.camera.isOpened():
             frame = cv2.flip(camera.read()[1],1)
             #Perform Hand Detection
-
+            handDetection.detectHands(frame,connection)
             #Perform Hand Detection
             cv2.imshow("Frame Detected",frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
