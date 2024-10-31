@@ -115,3 +115,16 @@ class HandDetection:
             #print(f"Direction Value = {PWM}")
             get(connection.URL+"/DirectionControl",params={"Direction":PWM})
         except: print("Realign Hand")
+
+    #method speedCtrl() to control the speed of the vehicle
+    def speedCtrl(self,connection):
+        try:
+            point = np.round((self.landmarks[8]+self.landmarks[12])/2)
+            circle_pos = eval(self.circle.format(
+                            point[0],self.centre[0],
+                                point[1],self.centre[1],self.radius))
+            if circle_pos <=0 and point[1]<=self.LOW.y and point[1]>=self.HIGH.y: self.centre[1] = point[1]
+            PWM = round(255*(self.centre[1] - self.LOW.y)/(self.HIGH.y-self.LOW.y))
+            # print(f"Signal Sent to ESP8266 = {PWM}")
+            get(connection.URL+"/speedControl",params={"speed":PWM})
+        except: pass
