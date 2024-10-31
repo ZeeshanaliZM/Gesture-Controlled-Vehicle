@@ -57,6 +57,14 @@ class HandDetection:
     #method getFrameShape() returns the shape of the image frame
     def getFrameShape(self,frame):
         self.frame_shape = FrameShape(frame.shape[1],frame.shape[0])
+
+    #method setSpeedLimits() to set the data members for Speed Control and its limits
+    def setSpeedLimit(self):
+        self.LOW = Point(int(3*self.frame_shape.width/4),int(6*self.frame_shape.height/8))
+        self.HIGH = Point(int(3*self.frame_shape.width/4),int(self.frame_shape.height/8))
+        self.centre = np.array([*self.LOW])
+        # print(f"Low Speed = {self.LOW} and High Speed = {self.HIGH}")
+
     #method detectHands() which checks for the presence of hands in the frame
     def detectHands(self,frame):
         result = self.hands.process(
