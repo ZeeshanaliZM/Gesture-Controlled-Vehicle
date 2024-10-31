@@ -2,8 +2,6 @@ from requests import get, exceptions
 import cv2
 from collections import namedtuple
 
-FrameShape = namedtuple('Frame Shape',['width','height'])
-
 #Creation of class Connection to connect to the μC
 class Connection:
     def __init__(self,ESP8266_mDNS_URL,port):
