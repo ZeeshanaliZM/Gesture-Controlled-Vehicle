@@ -92,3 +92,15 @@ class HandDetection:
             else:
                 pass
                 self.speedCtrl(result,idx)
+    
+    #method lnrMotionCtrl() contains the logic for linear motion control
+    def lnrMotionCtrl(self,connection):
+        tip_dip_diff_coord_y = self.landmarks[8:24:4][1] - self.landmarks[7:23:4][1]
+        tip_mcp_diff_coord_y = self.landmarks[8:24:4][1] - self.landmarks[5:21:4][1]
+
+        if np.all(tip_dip_diff_coord_y<0):
+            #print("Move Backwards")
+            get(connection.URL+"/moveForward")
+        if np.all(tip_mcp_diff_coord_y>0):
+            #print("Move Forward")
+            get(connection.URL+"/moveBackward")
