@@ -5,6 +5,7 @@ from collections import namedtuple
 import numpy as np
 
 Point = namedtuple('Point',['x','y'])
+FrameShape = namedtuple('Frame_Shape',['width','height'])
 
 #Creation of class Connection to connect to the μC
 class Connection:
