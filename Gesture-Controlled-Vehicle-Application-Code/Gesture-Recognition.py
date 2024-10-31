@@ -77,7 +77,6 @@ class HandDetection:
     def vehicleCtrl(self,result,frame,connection):
         for idx,hand in enumerate(result.multi_handedness):
             landmarks = result.multi_hand_landmarks[idx]
-            draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
             try:
                 self.landmarks = np.array([
                                         _normalized_to_pixel_coordinates(
@@ -86,12 +85,14 @@ class HandDetection:
             except: print("Landmarks Missing")
 
             if hand.classification[0].label == "Left":
-                pass
                 self.lnrMotionCtrl(connection)
                 self.rotMotionCtrl(connection)
-            else:
+                draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
                 pass
+            else:
                 self.speedCtrl(connection)
+                cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
+                pass
     
     #method lnrMotionCtrl() contains the logic for linear motion control
     def lnrMotionCtrl(self,connection):
