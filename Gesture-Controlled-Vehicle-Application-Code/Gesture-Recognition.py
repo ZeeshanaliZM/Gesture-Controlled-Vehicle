@@ -99,7 +99,7 @@ class HandDetection:
     def detectHands(self,frame,connection):
         result = self.hands.process(
                     cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
-        if not self.frame_shape: self.getFrameShape()
+        if not self.frame_shape: self.getFrameShape(frame)
         if not self.LOW: self.setSpeedLimit()
         if result.multi_handedness: self.vehicleCtrl(result,frame,connection)
 
