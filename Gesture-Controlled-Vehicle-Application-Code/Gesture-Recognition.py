@@ -110,7 +110,7 @@ class HandDetection:
             try:
                 self.landmarks = np.array([
                                         _normalized_to_pixel_coordinates(
-                                            points.x,points.y,frame_shape['width'],frame_shape['height'])
+                                            points.x,points.y,self.frame_shape.width,self.frame_shape.height)
                                                 for points in landmarks.landmark])
             except: print("Landmarks Missing")
 
