@@ -117,15 +117,17 @@ class HandDetection:
             if hand.classification[0].label == "Left":
                 self.threads[0] = threading.Thread(target=self.lnrMotionCtrl,args=[connection])
                 self.threads[1] = threading.Thread(target=self.rotMotionCtrl,args=[connection])
-                self.lnrMotionCtrl(connection)
-                self.rotMotionCtrl(connection)
+                
+                for thread in self.threads[0:2]: thread.start()
                 draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
                 pass
             else:
                 self.threads[2] = threading.Thread(target=self.threads,args=[connection])
+                self.threads[2].start()
                 cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
                 pass
-    
+            for threads in self.threads: threads.join()
+
     #method lnrMotionCtrl() contains the logic for linear motion control
     def lnrMotionCtrl(self,connection):
         tip_dip_diff_coord_y = self.landmarks[8:24:4][1] - self.landmarks[7:23:4][1]
