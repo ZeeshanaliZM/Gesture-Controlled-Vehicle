@@ -126,7 +126,8 @@ class HandDetection:
                 self.threads[2].start()
                 cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
                 pass
-            for threads in self.threads: threads.join()
+            for thread in self.threads: 
+                if thread: thread.join()
 
     #method lnrMotionCtrl() contains the logic for linear motion control
     def lnrMotionCtrl(self,connection):
