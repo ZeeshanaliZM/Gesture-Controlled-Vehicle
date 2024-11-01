@@ -3,6 +3,7 @@ from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks,_normalized_to_pixel_coordinates
 from collections import namedtuple
 import numpy as np
+import cv2
 
 Point = namedtuple('Point',['x','y'])
 FrameShape = namedtuple('Frame_Shape',['width','height'])
