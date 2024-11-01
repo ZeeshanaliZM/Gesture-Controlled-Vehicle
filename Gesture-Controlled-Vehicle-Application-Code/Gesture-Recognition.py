@@ -2,6 +2,7 @@ from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks,_normalized_to_pixel_coordinates
 from collections import namedtuple
+import threading
 import numpy as np
 import cv2
 
