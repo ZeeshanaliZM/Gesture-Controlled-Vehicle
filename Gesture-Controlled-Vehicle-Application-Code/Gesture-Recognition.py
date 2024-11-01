@@ -122,7 +122,7 @@ class HandDetection:
                 draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
                 pass
             else:
-                self.threads[2] = threading.Thread(target=self.threads,args=[connection])
+                self.threads[2] = threading.Thread(target=self.speedCtrl,args=[connection])
                 self.threads[2].start()
                 cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
                 pass
