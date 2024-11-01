@@ -2,7 +2,9 @@ from requests import get, exceptions
 from mediapipe.python.solutions.hands import Hands,HAND_CONNECTIONS
 from mediapipe.python.solutions.drawing_utils import draw_landmarks,_normalized_to_pixel_coordinates
 from collections import namedtuple
+import threading
 import numpy as np
+import cv2
 
 Point = namedtuple('Point',['x','y'])
 FrameShape = namedtuple('Frame_Shape',['width','height'])
@@ -49,7 +51,7 @@ class Camera:
     #Function processFrame() process the frame to detect Hands 
     def processFrames(self,handDetection,connection):
         while self.camera.isOpened():
-            frame = cv2.flip(camera.read()[1],1)
+            frame = cv2.flip(self.camera.read()[1],1)
             #Perform Hand Detection
             handDetection.detectHands(frame,connection)
             #Perform Hand Detection
@@ -58,10 +60,10 @@ class Camera:
                 break
         self.camera.release()
         cv2.destroyAllWindows()
-        
+
 #Class HandDetection to detect and process hands in images and issue commands to μC
 class HandDetection:
-    def __init__(self):
+    def __init__(self,radius=25):
         '''
         Data Members:
         hands - Stores the Hands() object to use the HandLandmark detection model 
@@ -71,13 +73,16 @@ class HandDetection:
         frame_shape - To store the shape of the frame
         circle - Contains the equation of the circle evaluated for the speed control condition check
         radius - Contains the radius of the circle used for previous data member
+        threads - List that contains threads to run methods 
+                    lnrMotionCtrl, rotMotionCtrl, speedCtrl in a multithreaded manner for better performance
         '''
         self.hands = Hands(model_complexity=0,
                              min_detection_confidence=0.5,
                                 min_tracking_confidence=0.5)
         self.LOW = self.HIGH = self.landmarks = self.centre = self.frame_shape = None
         self.circle = "({}-{})**2+({}-{})**2 - {}**2"
-        self.radius = 25
+        self.radius = radius
+        self.threads = [None]*3
 
     #method getFrameShape() returns the shape of the image frame
     def getFrameShape(self,frame):
@@ -94,7 +99,7 @@ class HandDetection:
     def detectHands(self,frame,connection):
         result = self.hands.process(
                     cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
-        if not self.frame_shape: self.getFrameShape()
+        if not self.frame_shape: self.getFrameShape(frame)
         if not self.LOW: self.setSpeedLimit()
         if result.multi_handedness: self.vehicleCtrl(result,frame,connection)
 
@@ -105,20 +110,25 @@ class HandDetection:
             try:
                 self.landmarks = np.array([
                                         _normalized_to_pixel_coordinates(
-                                            points.x,points.y,frame_shape['width'],frame_shape['height'])
+                                            points.x,points.y,self.frame_shape.width,self.frame_shape.height)
                                                 for points in landmarks.landmark])
             except: print("Landmarks Missing")
 
             if hand.classification[0].label == "Left":
-                self.lnrMotionCtrl(connection)
-                self.rotMotionCtrl(connection)
+                self.threads[0] = threading.Thread(target=self.lnrMotionCtrl,args=[connection])
+                self.threads[1] = threading.Thread(target=self.rotMotionCtrl,args=[connection])
+                
+                for thread in self.threads[0:2]: thread.start()
                 draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
                 pass
             else:
-                self.speedCtrl(connection)
+                self.threads[2] = threading.Thread(target=self.speedCtrl,args=[connection])
+                self.threads[2].start()
                 cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
                 pass
-    
+            for thread in self.threads: 
+                if thread: thread.join()
+
     #method lnrMotionCtrl() contains the logic for linear motion control
     def lnrMotionCtrl(self,connection):
         tip_dip_diff_coord_y = self.landmarks[8:24:4][1] - self.landmarks[7:23:4][1]
@@ -154,3 +164,12 @@ class HandDetection:
             # print(f"Signal Sent to ESP8266 = {PWM}")
             get(connection.URL+"/speedControl",params={"speed":PWM})
         except: pass
+
+class GCV:
+    def __init__(self,ESP_URL,ESP_Port):
+        self.Connection = Connection(ESP_URL,ESP_Port)
+        self.HandDetection = HandDetection() 
+        self.Camera = Camera(0,self.HandDetection,self.Connection)
+
+if __name__ == "__main__":
+    GCV("http://esp8266.local:80/",80)
