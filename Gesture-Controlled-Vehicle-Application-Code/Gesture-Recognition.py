@@ -115,12 +115,14 @@ class HandDetection:
             except: print("Landmarks Missing")
 
             if hand.classification[0].label == "Left":
+                self.threads[0] = threading.Thread(target=self.lnrMotionCtrl,args=[connection])
+                self.threads[1] = threading.Thread(target=self.rotMotionCtrl,args=[connection])
                 self.lnrMotionCtrl(connection)
                 self.rotMotionCtrl(connection)
                 draw_landmarks(frame,landmarks,HAND_CONNECTIONS)
                 pass
             else:
-                self.speedCtrl(connection)
+                self.threads[2] = threading.Thread(target=self.threads,args=[connection])
                 cv2.circle(frame,tuple(self.centre.ravel()),self.radius,color=(0,255,0),thickness=-3)
                 pass
     
