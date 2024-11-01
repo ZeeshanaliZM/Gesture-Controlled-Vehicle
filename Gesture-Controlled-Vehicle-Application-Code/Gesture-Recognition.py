@@ -60,10 +60,10 @@ class Camera:
                 break
         self.camera.release()
         cv2.destroyAllWindows()
-        
+
 #Class HandDetection to detect and process hands in images and issue commands to μC
 class HandDetection:
-    def __init__(self):
+    def __init__(self,radius=25):
         '''
         Data Members:
         hands - Stores the Hands() object to use the HandLandmark detection model 
@@ -73,13 +73,16 @@ class HandDetection:
         frame_shape - To store the shape of the frame
         circle - Contains the equation of the circle evaluated for the speed control condition check
         radius - Contains the radius of the circle used for previous data member
+        threads - List that contains threads to run methods 
+                    lnrMotionCtrl, rotMotionCtrl, speedCtrl in a multithreaded manner for better performance
         '''
         self.hands = Hands(model_complexity=0,
                              min_detection_confidence=0.5,
                                 min_tracking_confidence=0.5)
         self.LOW = self.HIGH = self.landmarks = self.centre = self.frame_shape = None
         self.circle = "({}-{})**2+({}-{})**2 - {}**2"
-        self.radius = 25
+        self.radius = radius
+        self.threads = [None]*3
 
     #method getFrameShape() returns the shape of the image frame
     def getFrameShape(self,frame):
