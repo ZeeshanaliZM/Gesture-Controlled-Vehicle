@@ -1,6 +1,8 @@
 #ifndef WIFI_EEPROM_H
 #define WIFI_EEPROM_H
 
+#include <EEPROM.h>
+
 //Structure to store the Wifi Details
 typedef struct WifiDetails{
     char *SSID;
