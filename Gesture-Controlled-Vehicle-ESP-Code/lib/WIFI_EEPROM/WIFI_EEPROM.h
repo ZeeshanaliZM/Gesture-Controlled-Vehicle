@@ -5,8 +5,8 @@
 
 //Structure to store the Wifi Details
 typedef struct WifiDetails{
-    char *SSID;
-    char *password;
+    char SSID[30];
+    char password[10];
 }WifiDetails;
 
 //Function storeWifiDetails stores the wifi details in the EEPROM and can be extracted during runtime
