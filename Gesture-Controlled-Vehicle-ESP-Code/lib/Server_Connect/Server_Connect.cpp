@@ -2,9 +2,9 @@
 
 //Connect to the Wifi. Retrieve the Wifi Credentials from the EEPROM
 void connecttoWifi(int Address){
-    WifiDetails* Wifi1 = getWifiDetails(Address);
+    WifiDetails Wifi = getWifiDetails(Address);
     WiFi.mode(WIFI_STA);
-    WiFi.begin(Wifi1->SSID,Wifi1->password);
+    WiFi.begin(Wifi.SSID,Wifi.password);
     Serial.print(F("Connecting"));
     while (WiFi.status() != WL_CONNECTED)
     {
