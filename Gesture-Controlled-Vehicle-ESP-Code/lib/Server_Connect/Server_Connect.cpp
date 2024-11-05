@@ -48,7 +48,7 @@ void backwardHandler(){
 void directionControlHandler(){
     int PWM = server.arg("Direction").toInt();
     server.send(200,"text/plain","");
-    if PWM>0 
+    if (PWM>0) 
     {
         Serial.println("Move Left");
         moveLeft(PWM);
@@ -72,6 +72,6 @@ void URLHandler(){
     server.on(ROOT,rootHandle);
     server.on(FORWARD,forwardHandler);
     server.on(BACKWARD,backwardHandler);
-    server.on(DIRECTION,directionControlHandler)
+    server.on(DIRECTION,directionControlHandler);
     server.on(SPEED,speedControlHandler);
 }
