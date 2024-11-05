@@ -1,6 +1,10 @@
 #ifndef WIFI_EEPROM_H
 #define WIFI_EEPROM_H
 
+#ifndef ARDUINO_H
+#include <Arduino.h>
+#endif
+
 #include <EEPROM.h>
 
 //Structure to store the Wifi Details
