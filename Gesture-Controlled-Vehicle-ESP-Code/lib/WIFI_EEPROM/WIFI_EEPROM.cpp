@@ -7,6 +7,7 @@ void storeWifiDetails(char ssid[30],char password[10],int address){
     strcpy(Wifi.password,password);
     EEPROM.begin(256);
     EEPROM.put(address,Wifi);
+    if (EEPROM.commit()) Serial.println("\nWrite to EEPROM was successfull");
     EEPROM.end();
 }
 
