@@ -9,8 +9,8 @@ void storeWifiDetails(char ssid[30],char password[10],int address){
 }
 
 //Function to get the wifi details from the EEPROM
-WifiDetails* getWifiDetails(int address){
+WifiDetails getWifiDetails(int address){
     WifiDetails Wifi;
     EEPROM.get(address,Wifi);
-    return &Wifi;
+    return Wifi;
 }
