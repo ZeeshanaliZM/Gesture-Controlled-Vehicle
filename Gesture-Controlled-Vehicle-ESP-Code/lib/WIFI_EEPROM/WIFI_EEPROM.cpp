@@ -1,4 +1,3 @@
-#include <EEPROM.h>
 #include "WIFI_EEPROM.h"
 
 //Function to store the Wifi Details in the EEPROM
