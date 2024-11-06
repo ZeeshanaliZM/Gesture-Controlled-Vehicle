@@ -36,7 +36,7 @@ void configMotorPins(){
 //Send PWM value to change speed or direction of wheels
 void setMotorSpeed_Direction(uint8_t pin,int motorSpeed_Direction){
     analogWrite(pin,motorSpeed_Direction);
-    Serial.println("Reached");
+    Serial.println(motorSpeed_Direction);
 }
 
 //Move the car forward
