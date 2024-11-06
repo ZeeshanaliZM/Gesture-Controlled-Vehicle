@@ -1,5 +1,7 @@
 #include "Server_Connect.h"
 
+ESP8266WebServer server(80);
+
 //Connect to the Wifi. Retrieve the Wifi Credentials from the EEPROM
 void connecttoWifi(int Address){
     WifiDetails Wifi = getWifiDetails(Address);
