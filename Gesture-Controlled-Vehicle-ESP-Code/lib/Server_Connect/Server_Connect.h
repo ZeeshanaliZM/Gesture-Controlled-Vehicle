@@ -39,6 +39,6 @@ void speedControlHandler();
 void URLHandler();
 
 //Object to create and modify webserver on ESP8266
-static ESP8266WebServer server(80);
+extern ESP8266WebServer server;
 
 #endif
