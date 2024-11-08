@@ -1,7 +1,7 @@
 #include "WIFI_EEPROM.h"
 
 //Function to store the Wifi Details in the EEPROM
-void storeWifiDetails(char ssid[30],char password[10],int address){
+void storeWifiDetails(char ssid[30],char password[20],int address){
     WifiDetails Wifi;
     strcpy(Wifi.SSID,ssid);
     strcpy(Wifi.password,password);

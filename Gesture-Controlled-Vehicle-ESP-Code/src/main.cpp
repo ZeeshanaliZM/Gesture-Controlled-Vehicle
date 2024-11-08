@@ -6,7 +6,7 @@
 
 // //Store the wifi credentials in EEPROM if not stored. Delete these after they are stored in the EEPROM
 // char ssid[30] = "Enter Wifi SSID";
-// char password[10] = "Enter Password";
+// char password[20] = "Enter Password";
 
 void setup() {
   Serial.begin(9600);
