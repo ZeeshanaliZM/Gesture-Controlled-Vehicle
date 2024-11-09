@@ -1,3 +1,11 @@
+/*Connections for Motor and Driver
+Red Wire of Back Motor - M3
+Black Wire of Back Motor - M4
+
+Red Wire of Front Motor - M1
+Black Wire of Back Motor - M2
+*/
+
 #ifndef PIN_DEFINITIONS_H
 #define PIN_DEFINITIONS_H
 
