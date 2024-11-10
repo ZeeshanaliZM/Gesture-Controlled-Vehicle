@@ -50,15 +50,7 @@ void backwardHandler(){
 void directionControlHandler(){
     int PWM = server.arg("Direction").toInt();
     server.send(200,"text/plain","");
-    if (PWM>0) 
-    {
-        Serial.println("Move Left");
-        moveLeft(PWM);
-    }
-    else{
-        Serial.println("Move Right");
-        moveRight(PWM);
-    }
+    changeDirection(PWM);
 }
 
 //Handler to change the speed of the car when /speedControl Route is reached
@@ -66,7 +58,7 @@ void speedControlHandler(){
     int speed = server.arg("speed").toInt();
     server.send(200,"text/plain","");
     Serial.println("Change speed");
-    setMotorSpeed_Direction(DRIVER_EN2_BACK_SPEED,speed);
+    setMotorSpeed(DRIVER_EN2_BACK_SPEED,speed);
 }
 
 //Link Endpoints and Handlers together
