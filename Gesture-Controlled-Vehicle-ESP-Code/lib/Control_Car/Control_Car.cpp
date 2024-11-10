@@ -7,24 +7,22 @@ Red Wire of Front Motor - M1
 Black Wire of Back Motor - M2
 */
 
+Servo FrontWheels;
+
 //Set the motor pin directions to OUTPUT
 void setMotorPinDirection(){
-    pinMode(DRIVER_IN1_FRONT,OUTPUT);
-    pinMode(DRIVER_IN2_FRONT,OUTPUT);
     pinMode(DRIVER_IN3_BACK,OUTPUT);
     pinMode(DRIVER_IN4_BACK,OUTPUT);
-    pinMode(DRIVER_EN1_FRONT_DIRECTION,OUTPUT);
+    pinMode(FRONT_WHEELS,OUTPUT);
     pinMode(DRIVER_EN2_BACK_SPEED,OUTPUT);
 }
 
 //Set the initial state of all the pins to LOW
 void initPins(){
-    digitalWrite(DRIVER_IN1_FRONT,LOW);
-    digitalWrite(DRIVER_IN2_FRONT,LOW);
     digitalWrite(DRIVER_IN3_BACK,LOW);
     digitalWrite(DRIVER_IN4_BACK,LOW);
-    digitalWrite(DRIVER_EN1_FRONT_DIRECTION,LOW);
     digitalWrite(DRIVER_EN2_BACK_SPEED,LOW);
+    FrontWheels.attach(FRONT_WHEELS);
 }
 
 //Calls the setMotorPinDirection and initPins functions.
@@ -34,9 +32,9 @@ void configMotorPins(){
 }
 
 //Send PWM value to change speed or direction of wheels
-void setMotorSpeed_Direction(uint8_t pin,int motorSpeed_Direction){
-    analogWrite(pin,motorSpeed_Direction);
-    Serial.println(motorSpeed_Direction);
+void setMotorSpeed(uint8_t pin,int motorSpeed){
+    analogWrite(pin,motorSpeed);
+    Serial.println(motorSpeed);
 }
 
 //Move the car forward
@@ -51,16 +49,7 @@ void moveBackward(){
     digitalWrite(DRIVER_IN3_BACK,HIGH);
 }
 
-//Move the car Left
-void moveLeft(int PWM){
-    digitalWrite(DRIVER_IN2_FRONT,HIGH);
-    digitalWrite(DRIVER_IN1_FRONT,LOW);
-    setMotorSpeed_Direction(DRIVER_EN1_FRONT_DIRECTION,PWM);
-}
-
-//Move the car right 
-void moveRight(int PWM){
-    digitalWrite(DRIVER_IN2_FRONT,LOW);
-    digitalWrite(DRIVER_IN1_FRONT,HIGH);
-    setMotorSpeed_Direction(DRIVER_EN1_FRONT_DIRECTION,PWM);
+//Change the direction of the car
+void changeDirection(int PWM){
+    FrontWheels.write(PWM);
 }
