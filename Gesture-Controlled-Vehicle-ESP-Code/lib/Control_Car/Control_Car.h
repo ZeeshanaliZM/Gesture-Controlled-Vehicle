@@ -6,6 +6,7 @@
 #endif
 
 #include "Pin_Definitions.h"
+#include <Servo.h>
 
 //Set the motor pin directions to OUTPUT
 void setMotorPinDirection();
@@ -17,7 +18,7 @@ void initPins();
 void configMotorPins();
 
 //Send PWM value to change speed or direction of wheels
-void setMotorSpeed_Direction(uint8_t pin,int motorSpeed_Direction);
+void setMotorSpeed(uint8_t pin,int motorSpeed_Direction);
 
 //Move the car forward
 void moveForward();
@@ -25,9 +26,8 @@ void moveForward();
 //Move the car backward
 void moveBackward();
 
-//Move the car Left
-void moveLeft(int PWM);
+//Change the direction of the car
+void changeDirection(int PWM);
 
-//Move the car right 
-void moveRight(int PWM);
+extern Servo FrontWheels;
 #endif 
