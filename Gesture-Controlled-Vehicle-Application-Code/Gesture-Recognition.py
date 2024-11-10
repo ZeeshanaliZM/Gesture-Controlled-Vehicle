@@ -63,7 +63,7 @@ class Camera:
 
 #Class HandDetection to detect and process hands in images and issue commands to μC
 class HandDetection:
-    def __init__(self,radius=25):
+    def __init__(self,zero,radius=25):
         '''
         Data Members:
         hands - Stores the Hands() object to use the HandLandmark detection model 
@@ -75,6 +75,7 @@ class HandDetection:
         radius - Contains the radius of the circle used for previous data member
         threads - List that contains threads to run methods 
                     lnrMotionCtrl, rotMotionCtrl, speedCtrl in a multithreaded manner for better performance
+        zero - Stores the angle value for neutral direction of wheels (no left or right alignment)
         '''
         self.hands = Hands(model_complexity=0,
                              min_detection_confidence=0.5,
@@ -83,6 +84,7 @@ class HandDetection:
         self.circle = "({}-{})**2+({}-{})**2 - {}**2"
         self.radius = radius
         self.threads = [None]*3
+        self.zero = zero
 
     #method getFrameShape() returns the shape of the image frame
     def getFrameShape(self,frame):
@@ -150,7 +152,7 @@ class HandDetection:
             ref_line = np.array([1,0])
             pf_vector = self.landmarks[17]-self.landmarks[0]
             angle = np.rad2deg(np.arcsin(ref_line.dot(pf_vector)/np.linalg.norm(pf_vector)))
-            signal = np.ravel(np.floor(angle))+90
+            signal = np.ravel(np.floor(angle))+self.zero
             # PWM = np.floor(180*angle/90)
             # print(f"Direction Value = {angle}")
             get(connection.URL+"/directionControl",params={"Direction":signal})
@@ -172,7 +174,7 @@ class HandDetection:
 class GCV:
     def __init__(self,ESP_URL,ESP_Port):
         self.Connection = Connection(ESP_URL,ESP_Port)
-        self.HandDetection = HandDetection() 
+        self.HandDetection = HandDetection(zero=90) 
         self.Camera = Camera(0,self.HandDetection,self.Connection)
 
 if __name__ == "__main__":
