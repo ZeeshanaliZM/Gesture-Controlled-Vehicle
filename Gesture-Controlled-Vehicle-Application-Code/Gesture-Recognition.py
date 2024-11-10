@@ -150,9 +150,10 @@ class HandDetection:
             ref_line = np.array([1,0])
             pf_vector = self.landmarks[17]-self.landmarks[0]
             angle = np.rad2deg(np.arcsin(ref_line.dot(pf_vector)/np.linalg.norm(pf_vector)))
-            PWM = np.floor(255*angle/90)
-            #print(f"Direction Value = {PWM}")
-            get(connection.URL+"/directionControl",params={"Direction":PWM})
+            signal = np.ravel(np.floor(angle))+90
+            # PWM = np.floor(180*angle/90)
+            # print(f"Direction Value = {angle}")
+            get(connection.URL+"/directionControl",params={"Direction":signal})
         except: print("Realign Hand")
 
     #method speedCtrl() to control the speed of the vehicle
